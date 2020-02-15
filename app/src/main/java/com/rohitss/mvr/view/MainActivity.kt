@@ -1,13 +1,15 @@
 package com.rohitss.mvr.view
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.viewModels
+import com.rohitss.aacmvi.AacMviActivity
 import com.rohitss.mvr.R
 import com.rohitss.mvr.repository.NewsItem
 import com.rohitss.mvr.toast
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AacMviActivity<MainViewState, MainViewEffect, MainViewEvent, MainViewActVM>() {
+    override val viewModel: MainViewActVM by viewModels()
 
     private val newsRvAdapter by lazy {
         NewsRvAdapter {
@@ -29,4 +31,13 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
+
+    override fun renderViewState(viewState: MainViewState) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun renderViewEffect(viewEffect: MainViewEffect?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 }
+

@@ -1,15 +1,35 @@
 package com.rohitss.aacmvi
 
-val Any.TAG: String
+import android.util.Log
+import androidx.annotation.CallSuper
+
+internal val Any.TAG: String
     get() {
         return if (!javaClass.isAnonymousClass) {
             val name = javaClass.simpleName
-            if (name.length <= 23) name else name.substring(0, 23)// first 23 chars
+            // first 23 chars
+            if (name.length <= 23) name else name.substring(0, 23)
         } else {
             val name = javaClass.name
-            if (name.length <= 23) name else name.substring(
-                name.length - 23,
-                name.length
-            )// last 23 chars
+            // last 23 chars
+            if (name.length <= 23) name else name.substring(name.length - 23, name.length)
         }
     }
+
+/**
+ * Internal Contract to be implemented by ViewModel
+ * Required to intercept and log ViewEvents
+ */
+internal interface ViewModelContract<EVENT> {
+    fun process(viewEvent: EVENT)
+}
+
+/**
+ * Contract to be implemented by DataStore
+ */
+internal interface AacMviDataStore {
+    @CallSuper
+    fun onCleared() {
+        Log.d(TAG, "onCleared")
+    }
+}
