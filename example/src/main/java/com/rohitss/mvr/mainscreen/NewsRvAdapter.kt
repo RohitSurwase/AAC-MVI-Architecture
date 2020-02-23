@@ -1,4 +1,4 @@
-package com.rohitss.mvr.view
+package com.rohitss.mvr.mainscreen
 
 import android.view.View
 import android.view.ViewGroup
@@ -25,8 +25,6 @@ class NewsRvAdapter(private val listener: (View) -> Unit) :
 
     override fun getItemCount() = currentList.size
 
-    override fun getItemId(position: Int) = getItem(position).id
-
     inner class MyViewHolder(override val containerView: View, listener: (View) -> Unit) :
         RecyclerView.ViewHolder(containerView),
         LayoutContainer {
@@ -37,7 +35,7 @@ class NewsRvAdapter(private val listener: (View) -> Unit) :
 
         fun bind(newsItem: NewsItem) =
             with(itemView) {
-                itemView.tag = newsItem.id
+                itemView.tag = newsItem
                 tvTitle.text = newsItem.title
                 tvDescription.text = newsItem.description
                 ivThumbnail.load(newsItem.imageUrl) {
@@ -49,11 +47,11 @@ class NewsRvAdapter(private val listener: (View) -> Unit) :
 
     internal class NewsItemItemCallback : DiffUtil.ItemCallback<NewsItem>() {
         override fun areItemsTheSame(oldItem: NewsItem, newItem: NewsItem): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem == newItem
         }
 
         override fun areContentsTheSame(oldItem: NewsItem, newItem: NewsItem): Boolean {
-            return oldItem == newItem
+            return oldItem.title == newItem.title
         }
     }
 }

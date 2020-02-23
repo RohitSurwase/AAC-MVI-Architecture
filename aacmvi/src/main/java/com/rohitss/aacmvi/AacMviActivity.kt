@@ -19,6 +19,7 @@ package com.rohitss.aacmvi
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 
 /**
  * Abstract implementation of custom MVI for Activities.
@@ -29,12 +30,12 @@ abstract class AacMviActivity<STATE, EFFECT, EVENT, ViewModel : AacMviViewModel<
 
     abstract val viewModel: ViewModel
 
-    private val viewStateObserver = androidx.lifecycle.Observer<STATE> {
+    private val viewStateObserver = Observer<STATE> {
         Log.d(TAG, "observed viewState : $it")
         renderViewState(it)
     }
 
-    private val viewEffectObserver = androidx.lifecycle.Observer<EFFECT> {
+    private val viewEffectObserver = Observer<EFFECT> {
         Log.d(TAG, "observed viewEffect : $it")
         renderViewEffect(it)
     }

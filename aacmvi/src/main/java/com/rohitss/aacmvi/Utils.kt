@@ -1,8 +1,5 @@
 package com.rohitss.aacmvi
 
-import android.util.Log
-import androidx.annotation.CallSuper
-
 internal val Any.TAG: String
     get() {
         return if (!javaClass.isAnonymousClass) {
@@ -22,14 +19,4 @@ internal val Any.TAG: String
  */
 internal interface ViewModelContract<EVENT> {
     fun process(viewEvent: EVENT)
-}
-
-/**
- * Contract to be implemented by DataStore
- */
-internal interface AacMviDataStore {
-    @CallSuper
-    fun onCleared() {
-        Log.d(TAG, "onCleared")
-    }
 }

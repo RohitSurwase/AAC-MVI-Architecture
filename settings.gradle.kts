@@ -1,1 +1,1 @@
-include(":app", ":aacmvi")
+include(":example", ":aacmvi")

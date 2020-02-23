@@ -58,10 +58,10 @@ dependencies {
     implementation(kotlin("stdlib-jdk8", KotlinCompilerVersion.VERSION))
 
     //Room
-    implementation("androidx.room:room-runtime:2.2.3")
-    kapt("androidx.room:room-compiler:2.2.3")
+    //implementation("androidx.room:room-runtime:2.2.4")
+    //kapt("androidx.room:room-compiler:2.2.4")
     //Coroutines support for Room
-    implementation("androidx.room:room-ktx:2.2.3")
+    //implementation("androidx.room:room-ktx:2.2.4")
 
     //ViewModel and LiveData
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
@@ -78,5 +78,5 @@ dependencies {
     //Webservices
     implementation("com.squareup.retrofit2:retrofit:2.6.2")
     implementation("com.squareup.retrofit2:converter-gson:2.6.2")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.2.2")
+    //implementation("com.squareup.okhttp3:logging-interceptor:4.2.2")
 }

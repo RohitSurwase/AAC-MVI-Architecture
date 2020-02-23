@@ -65,7 +65,7 @@ open class AacMviViewModel<STATE, EFFECT, EVENT>(application: Application) :
 
 
     private val _viewEffects: SingleLiveEvent<EFFECT> = SingleLiveEvent()
-    fun viewEffects(): LiveData<EFFECT> = _viewEffects
+    fun viewEffects(): SingleLiveEvent<EFFECT> = _viewEffects
 
     private var _viewEffect: EFFECT? = null
     protected var viewEffect: EFFECT
@@ -79,12 +79,11 @@ open class AacMviViewModel<STATE, EFFECT, EVENT>(application: Application) :
 
     @CallSuper
     override fun process(viewEvent: EVENT) {
-        Log.d(TAG, "viewEvent: $viewEvent")
+        Log.d(TAG, "processing viewEvent: $viewEvent")
     }
 
     override fun onCleared() {
         super.onCleared()
         Log.d(TAG, "onCleared")
-
     }
 }
