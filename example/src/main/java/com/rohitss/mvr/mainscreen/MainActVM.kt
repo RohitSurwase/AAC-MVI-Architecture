@@ -28,7 +28,7 @@ class MainActVM(application: Application) :
     }
 
     private fun newsItemClicked(newsItem: NewsItem) {
-        viewEffect = MainViewEffect.ShowNewsTitleSnackbar(newsItem.title)
+        viewEffect = MainViewEffect.ShowSnackbar(newsItem.title)
     }
 
     private fun fabClicked() {

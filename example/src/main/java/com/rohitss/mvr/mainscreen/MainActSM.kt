@@ -6,7 +6,7 @@ import com.rohitss.mvr.repository.NewsItem
 data class MainViewState(val fetchStatus: FetchStatus, val newsList: List<NewsItem>)
 
 sealed class MainViewEffect {
-    data class ShowNewsTitleSnackbar(val title: String) : MainViewEffect()
+    data class ShowSnackbar(val message: String) : MainViewEffect()
     data class ShowToast(val message: String) : MainViewEffect()
 }
 
