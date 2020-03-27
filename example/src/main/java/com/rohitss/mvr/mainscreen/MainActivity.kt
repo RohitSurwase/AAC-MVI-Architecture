@@ -25,7 +25,6 @@ class MainActivity : AacMviActivity<MainViewState, MainViewEffect, MainViewEvent
         rvNewsHome.adapter = newsRvAdapter
 
         srlNewsHome.setOnRefreshListener {
-            if (srlNewsHome.isRefreshing) srlNewsHome.isRefreshing = false
             viewModel.process(MainViewEvent.OnSwipeRefresh)
         }
 

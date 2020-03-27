@@ -24,7 +24,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 
-
+/**
+ * Create Fragments by Extending this class.
+ *
+ * Also @see [AacMviViewModel] for [STATE], [EFFECT] and [EVENT] explanation.
+ * @param ViewModel Respective ViewModel class for this activity which extends [AacMviViewModel]
+ *
+ * @author Rohit Surwase
+ * @author https://github.com/RohitSurwase
+ * @version 1.0
+ * @since 1.0
+ */
 abstract class AacMviFragment<STATE, EFFECT, EVENT, ViewModel : AacMviViewModel<STATE, EFFECT, EVENT>> :
     Fragment() {
 
@@ -41,6 +51,7 @@ abstract class AacMviFragment<STATE, EFFECT, EVENT, ViewModel : AacMviViewModel<
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        //Registering observers
         viewModel.viewStates().observe(this, viewStateObserver)
         viewModel.viewEffects().observe(this, viewEffectObserver)
         return super.onCreateView(inflater, container, savedInstanceState)

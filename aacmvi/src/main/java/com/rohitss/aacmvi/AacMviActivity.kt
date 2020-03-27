@@ -22,8 +22,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 
 /**
- * Abstract implementation of custom MVI for Activities.
- * Extend your [AppCompatActivity] with this [AacMviActivity]
+ * Create Activities by Extending this class.
+ *
+ * Also @see [AacMviViewModel] for [STATE], [EFFECT] and [EVENT] explanation.
+ * @param ViewModel Respective ViewModel class for this activity which extends [AacMviViewModel]
+ *
+ * @author Rohit Surwase
+ * @author https://github.com/RohitSurwase
+ * @version 1.0
+ * @since 1.0
  */
 abstract class AacMviActivity<STATE, EFFECT, EVENT, ViewModel : AacMviViewModel<STATE, EFFECT, EVENT>> :
     AppCompatActivity() {
@@ -42,6 +49,7 @@ abstract class AacMviActivity<STATE, EFFECT, EVENT, ViewModel : AacMviViewModel<
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //Registering observers
         viewModel.viewStates().observe(this, viewStateObserver)
         viewModel.viewEffects().observe(this, viewEffectObserver)
     }

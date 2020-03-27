@@ -23,25 +23,26 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
-/** Abstract implementation of custom MVI for ViewModels.
- * Create Activity ViewModel by Extending this [AacMviViewModel] class.
+/**
+ * Create ViewModels by Extending this class.
  *
- * @param STATE
- * @param EFFECT
- * @param EVENT
+ * @param STATE ViewState should represent the current state of the view at any given time.
+ * So this class should have all the variable content on which our view is dependent.
+ * Every time there is any user input/action we will expose modified
+ * copy (to maintain the previous state which is not being modified) of this class.
+ * We can create this model using Kotlin's data class.
  *
- * @property _viewStates
- * @property viewStates()
- * @property viewState
+ * @param EFFECT ViewEffect is useful for actions that are fire-and-forget and we do not
+ * want to maintain its state. We can create this class using Kotlin's sealed class.
  *
- * @property _viewEffects
- * @property viewEffects()
- * @property viewEffect
- *
+ * @param EVENT Represents all actions/events a user can perform on the view.
+ * This is used to pass user input/action to the ViewModel.
+ * We can create this event set using Kotlin's sealed class.
  *
  * @property process(viewEvent: EVENT) Process ViewEvents (viewEvent) passed by Activity/Fragment/View
  *                                     and update ViewState and ViewEffect accordingly.
  *
+ * @see <a href="https://medium.com/@rohitss/best-architecture-for-android-mvi-livedata-viewmodel-71a3a5ac7ee3">Article which explains this Custom MVI architecture with Architecture Components.</a>
  * @author Rohit Surwase
  * @author https://github.com/RohitSurwase
  * @version 1.0

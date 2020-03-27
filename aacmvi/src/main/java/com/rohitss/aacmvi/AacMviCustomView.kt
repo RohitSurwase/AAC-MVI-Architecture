@@ -20,6 +20,19 @@ import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 
+/**
+ * Create Custom Views by Extending this class.
+ * Do not forget to call [startObserving] function inside constructor or similar method.
+ * Otherwise, it throws [NoObserverAttachedException].
+ *
+ * Also @see [AacMviViewModel] for [STATE], [EFFECT] and [EVENT] explanation.
+ * @param ViewModel Respective ViewModel class for this activity which extends [AacMviViewModel]
+ *
+ * @author Rohit Surwase
+ * @author https://github.com/RohitSurwase
+ * @version 1.0
+ * @since 1.0
+ */
 abstract class AacMviCustomView<STATE, EFFECT, EVENT, ViewModel : AacMviViewModel<STATE, EFFECT, EVENT>> {
 
     abstract val viewModel: ViewModel
@@ -35,6 +48,7 @@ abstract class AacMviCustomView<STATE, EFFECT, EVENT, ViewModel : AacMviViewMode
     }
 
     fun startObserving(lifecycleOwner: LifecycleOwner) {
+        //Registering observers
         viewModel.viewStates().observe(lifecycleOwner, viewStateObserver)
         viewModel.viewEffects().observe(lifecycleOwner, viewEffectObserver)
     }
