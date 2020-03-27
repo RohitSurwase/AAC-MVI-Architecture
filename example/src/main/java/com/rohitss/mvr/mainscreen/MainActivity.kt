@@ -52,8 +52,8 @@ class MainActivity : AacMviActivity<MainViewState, MainViewEffect, MainViewEvent
 
     override fun renderViewEffect(viewEffect: MainViewEffect) {
         when (viewEffect) {
-            is MainViewEffect.ShowNewsTitleSnackbar -> {
-                Snackbar.make(coordinatorLayoutRoot, viewEffect.title, Snackbar.LENGTH_SHORT).show()
+            is MainViewEffect.ShowSnackbar -> {
+                Snackbar.make(coordinatorLayoutRoot, viewEffect.message, Snackbar.LENGTH_SHORT).show()
             }
             is MainViewEffect.ShowToast -> {
                 toast(message = viewEffect.message)

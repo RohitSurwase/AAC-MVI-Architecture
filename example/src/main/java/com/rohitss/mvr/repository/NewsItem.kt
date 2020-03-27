@@ -1,8 +1,8 @@
 package com.rohitss.mvr.repository
 
 data class NewsItem(
-    var description: String,
-    var title: String,
-    var imageUrl: String,
-    var publishedAt: Long
+    val description: String,
+    val title: String,
+    val imageUrl: String,
+    val publishedAt: Long
 )
