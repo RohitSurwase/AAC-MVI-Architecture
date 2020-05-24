@@ -1,0 +1,41 @@
+/*
+ * Copyright 2020 Rohit Surwase
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.rohitss.aacmvi
+
+import android.app.Application
+import android.util.Log
+import androidx.annotation.CallSuper
+import androidx.lifecycle.LiveData
+
+open class AacMviViewModelDS<STATE, EFFECT, EVENT>(application: Application, private val walnutMviDS: AacMviDS<STATE, EFFECT>) :
+    AacMviViewModelBase<STATE, EFFECT, EVENT>(application) {
+
+    override fun viewStates(): LiveData<STATE> = walnutMviDS.stateLiveData
+
+    override fun viewEffects(): LiveData<EFFECT>  = walnutMviDS.effectLiveData
+
+    @CallSuper
+    override fun process(viewEvent: EVENT) {
+        Log.d(TAG, "viewEvent : $viewEvent")
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        walnutMviDS.onCleared()
+        Log.d(TAG, "onCleared")
+    }
+}

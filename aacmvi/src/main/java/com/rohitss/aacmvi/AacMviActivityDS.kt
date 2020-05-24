@@ -16,45 +16,33 @@
 
 package com.rohitss.aacmvi
 
+import android.os.Bundle
 import android.util.Log
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
+import androidx.appcompat.app.AppCompatActivity
 
-/**
- * Create Custom Views by Extending this class.
- * Do not forget to call [startObserving] function inside constructor or similar method.
- * Otherwise, it throws [NoObserverAttachedException].
- *
- * Also @see [AacMviViewModel] for [STATE], [EFFECT] and [EVENT] explanation.
- * @param ViewModel Respective ViewModel class for this activity which extends [AacMviViewModel]
- *
- * @author Rohit Surwase
- * @author https://github.com/RohitSurwase
- * @version 1.0
- * @since 1.0
- */
-abstract class AacMviCustomView<STATE, EFFECT, EVENT, ViewModel : AacMviViewModel<STATE, EFFECT, EVENT>> {
+abstract class AacMviActivityDS<STATE, EFFECT, EVENT, ViewModel : AacMviViewModelDS<STATE, EFFECT, EVENT>> :
+    AppCompatActivity() {
 
     abstract val viewModel: ViewModel
 
-    private val viewStateObserver = Observer<STATE> {
+    private val viewStateObserver = androidx.lifecycle.Observer<STATE> {
         if (enableLogs) {
             Log.d(TAG, "observed viewState : $it")
         }
         renderViewState(it)
     }
 
-    private val viewEffectObserver = Observer<EFFECT> {
+    private val viewEffectObserver = androidx.lifecycle.Observer<EFFECT> {
         if (enableLogs) {
             Log.d(TAG, "observed viewEffect : $it")
         }
         renderViewEffect(it)
     }
 
-    fun startObserving(lifecycleOwner: LifecycleOwner) {
-        //Registering observers
-        viewModel.viewStates().observe(lifecycleOwner, viewStateObserver)
-        viewModel.viewEffects().observe(lifecycleOwner, viewEffectObserver)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.viewStates().observe(this, viewStateObserver)
+        viewModel.viewEffects().observe(this, viewEffectObserver)
     }
 
     abstract fun renderViewState(viewState: STATE)

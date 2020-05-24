@@ -1,5 +1,16 @@
 package com.rohitss.aacmvi
 
+
+/**
+ * Global flag which enable/disable logging from the AacMvi architecture abstraction.
+ */
+var enableLogs = true
+
+/**
+ * Flag which shows/hides the detailed stack trace.
+ */
+var enableStackTrace = false
+
 internal val Any.TAG: String
     get() {
         return if (!javaClass.isAnonymousClass) {

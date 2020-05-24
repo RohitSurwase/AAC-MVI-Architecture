@@ -38,12 +38,16 @@ abstract class AacMviActivity<STATE, EFFECT, EVENT, ViewModel : AacMviViewModel<
     abstract val viewModel: ViewModel
 
     private val viewStateObserver = Observer<STATE> {
-        Log.d(TAG, "observed viewState : $it")
+        if (enableLogs) {
+            Log.d(TAG, "observed viewState : $it")
+        }
         renderViewState(it)
     }
 
     private val viewEffectObserver = Observer<EFFECT> {
-        Log.d(TAG, "observed viewEffect : $it")
+        if (enableLogs) {
+            Log.d(TAG, "observed viewEffect : $it")
+        }
         renderViewEffect(it)
     }
 

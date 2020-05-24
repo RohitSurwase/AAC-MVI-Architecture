@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import com.google.android.material.snackbar.Snackbar
 import com.rohitss.aacmvi.AacMviActivity
+import com.rohitss.aacmvi.enableLogs
 import com.rohitss.mvr.R
 import com.rohitss.mvr.repository.NewsItem
 import com.rohitss.mvr.toast

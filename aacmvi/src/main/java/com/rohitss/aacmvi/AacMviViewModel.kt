@@ -19,7 +19,6 @@ package com.rohitss.aacmvi
 import android.app.Application
 import android.util.Log
 import androidx.annotation.CallSuper
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
@@ -49,31 +48,48 @@ import androidx.lifecycle.MutableLiveData
  * @since 1.0
  */
 open class AacMviViewModel<STATE, EFFECT, EVENT>(application: Application) :
-    AndroidViewModel(application), ViewModelContract<EVENT> {
+    AacMviViewModelBase<STATE, EFFECT, EVENT>(application) {
 
     private val _viewStates: MutableLiveData<STATE> = MutableLiveData()
-    fun viewStates(): LiveData<STATE> = _viewStates
+    override fun viewStates(): LiveData<STATE> = _viewStates
 
     private var _viewState: STATE? = null
     protected var viewState: STATE
         get() = _viewState
             ?: throw UninitializedPropertyAccessException("\"viewState\" was queried before being initialized")
         set(value) {
-            Log.d(TAG, "setting viewState : $value")
+            if (enableLogs) {
+                if (enableStackTrace) {
+                    val stacktrace = Thread.currentThread().stackTrace
+                    Log.d(TAG, "setting viewState from \n${stacktrace[3]}\n${stacktrace[4]}\n${stacktrace[5]}\n: $value")
+                } else {
+                    Log.d(TAG, "setting viewState : $value")
+                }
+            }
             _viewState = value
             _viewStates.value = value
         }
 
 
     private val _viewEffects: SingleLiveEvent<EFFECT> = SingleLiveEvent()
-    fun viewEffects(): SingleLiveEvent<EFFECT> = _viewEffects
+    override fun viewEffects(): SingleLiveEvent<EFFECT> = _viewEffects
 
     private var _viewEffect: EFFECT? = null
     protected var viewEffect: EFFECT
         get() = _viewEffect
             ?: throw UninitializedPropertyAccessException("\"viewEffect\" was queried before being initialized")
         set(value) {
-            Log.d(TAG, "setting viewEffect : $value")
+            if (enableLogs) {
+                if (enableStackTrace) {
+                    val stacktrace = Thread.currentThread().stackTrace
+                    Log.d(
+                        TAG,
+                        "setting viewEffect from \n${stacktrace[3]}\n${stacktrace[4]}\n${stacktrace[5]}\n: $value"
+                    )
+                } else {
+                    Log.d(TAG, "setting viewEffect : $value")
+                }
+            }
             _viewEffect = value
             _viewEffects.value = value
         }
