@@ -6,10 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 
-const val BASE_URL = "https://newsapi.org/v2/"
-const val API_KEY = BuildConfig.NewsApiKey
+const val BASE_URL = "https://your_api_endpoint.com/"
 
-fun inflate(context: Context, viewId: Int, parent: ViewGroup? = null, attachToRoot: Boolean = false): View {
+fun inflate(
+    context: Context,
+    viewId: Int,
+    parent: ViewGroup? = null,
+    attachToRoot: Boolean = false
+): View {
     return LayoutInflater.from(context).inflate(viewId, parent, attachToRoot)
 }
 

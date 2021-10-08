@@ -3,25 +3,17 @@
 buildscript {
     repositories {
         google()
-        jcenter()
-
+        mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:3.5.3")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.61")
+        classpath("com.android.tools.build:gradle:3.5.4")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.30")
     }
 }
 
 allprojects {
     repositories {
         google()
-        jcenter()
-
-    }
-}
-
-tasks {
-    val clean by registering(Delete::class) {
-        delete(buildDir)
+        mavenCentral()
     }
 }

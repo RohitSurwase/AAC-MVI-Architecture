@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Rohit Surwase
+ * Copyright 2021 Rohit Surwase
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package com.rohitss.aacmvi
+package com.rohitss.aacmvi.activity
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import com.rohitss.aacmvi.common.AacMviConfig.enableLogs
+import com.rohitss.aacmvi.common.AacMviViewModel
+import com.rohitss.aacmvi.util.TAG
 
 /**
- * Create Fragments by Extending this class.
+ * Create Activities by extending this class.
  *
  * Also @see [AacMviViewModel] for [STATE], [EFFECT] and [EVENT] explanation.
  * @param ViewModel Respective ViewModel class for this activity which extends [AacMviViewModel]
@@ -35,26 +35,30 @@ import androidx.lifecycle.Observer
  * @version 1.0
  * @since 1.0
  */
-abstract class AacMviFragment<STATE, EFFECT, EVENT, ViewModel : AacMviViewModel<STATE, EFFECT, EVENT>> :
-    Fragment() {
+abstract class AacMviActivity<STATE, EFFECT, EVENT, ViewModel : AacMviViewModel<STATE, EFFECT, EVENT>> :
+    AppCompatActivity() {
 
     abstract val viewModel: ViewModel
 
     private val viewStateObserver = Observer<STATE> {
-        Log.d(TAG, "observed viewState : $it")
+        if (enableLogs) {
+            Log.d(TAG, "observed viewState : $it")
+        }
         renderViewState(it)
     }
 
     private val viewEffectObserver = Observer<EFFECT> {
-        Log.d(TAG, "observed viewEffect : $it")
+        if (enableLogs) {
+            Log.d(TAG, "observed viewEffect : $it")
+        }
         renderViewEffect(it)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         //Registering observers
         viewModel.viewStates().observe(this, viewStateObserver)
         viewModel.viewEffects().observe(this, viewEffectObserver)
-        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     abstract fun renderViewState(viewState: STATE)

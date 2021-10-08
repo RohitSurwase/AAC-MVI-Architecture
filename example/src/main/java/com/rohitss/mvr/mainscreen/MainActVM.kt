@@ -2,7 +2,7 @@ package com.rohitss.mvr.mainscreen
 
 import android.app.Application
 import androidx.lifecycle.viewModelScope
-import com.rohitss.aacmvi.AacMviViewModel
+import com.rohitss.aacmvi.common.AacMviViewModel
 import com.rohitss.mvr.LCE
 import com.rohitss.mvr.repository.NewsItem
 import com.rohitss.mvr.repository.NewsRepository
@@ -39,7 +39,7 @@ class MainActVM(application: Application) :
     private fun fetchNews() {
         viewState = viewState.copy(fetchStatus = FetchStatus.Fetching)
         viewModelScope.launch {
-            when (val result = repository.getSetLatestNewsFromServer()) {
+            when (val result = repository.getMockApiResponse()) {
                 is LCE.Error -> {
                     viewState = viewState.copy(fetchStatus = FetchStatus.Fetched)
                     viewEffect = MainViewEffect.ShowToast(message = result.message)

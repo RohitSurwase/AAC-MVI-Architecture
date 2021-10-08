@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Rohit Surwase
+ * Copyright 2021 Rohit Surwase
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,26 +14,30 @@
  * limitations under the License.
  */
 
-package com.rohitss.aacmvi
+package com.rohitss.aacmvi.fragment
 
+import android.os.Bundle
 import android.util.Log
-import androidx.lifecycle.LifecycleOwner
+import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.rohitss.aacmvi.common.AacMviViewModel
+import com.rohitss.aacmvi.util.TAG
 
 /**
- * Create Custom Views by Extending this class.
- * Do not forget to call [startObserving] function inside constructor or similar method.
- * Otherwise, it throws [NoObserverAttachedException].
+ * Create Fragments by extending this class.
  *
  * Also @see [AacMviViewModel] for [STATE], [EFFECT] and [EVENT] explanation.
- * @param ViewModel Respective ViewModel class for this activity which extends [AacMviViewModel]
+ * @param ViewModel ViewModel class for this Fragment which
+ *   extends [AacMviViewModel]
  *
  * @author Rohit Surwase
  * @author https://github.com/RohitSurwase
  * @version 1.0
  * @since 1.0
  */
-abstract class AacMviCustomView<STATE, EFFECT, EVENT, ViewModel : AacMviViewModel<STATE, EFFECT, EVENT>> {
+abstract class AacMviFragment<STATE, EFFECT, EVENT, ViewModel : AacMviViewModel<STATE, EFFECT, EVENT>> :
+    Fragment() {
 
     abstract val viewModel: ViewModel
 
@@ -47,10 +51,10 @@ abstract class AacMviCustomView<STATE, EFFECT, EVENT, ViewModel : AacMviViewMode
         renderViewEffect(it)
     }
 
-    fun startObserving(lifecycleOwner: LifecycleOwner) {
-        //Registering observers
-        viewModel.viewStates().observe(lifecycleOwner, viewStateObserver)
-        viewModel.viewEffects().observe(lifecycleOwner, viewEffectObserver)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.viewStates().observe(viewLifecycleOwner, viewStateObserver)
+        viewModel.viewEffects().observe(viewLifecycleOwner, viewEffectObserver)
     }
 
     abstract fun renderViewState(viewState: STATE)

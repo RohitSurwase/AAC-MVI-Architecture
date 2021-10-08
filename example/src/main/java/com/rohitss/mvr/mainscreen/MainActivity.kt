@@ -3,7 +3,7 @@ package com.rohitss.mvr.mainscreen
 import android.os.Bundle
 import androidx.activity.viewModels
 import com.google.android.material.snackbar.Snackbar
-import com.rohitss.aacmvi.AacMviActivity
+import com.rohitss.aacmvi.activity.AacMviActivity
 import com.rohitss.mvr.R
 import com.rohitss.mvr.repository.NewsItem
 import com.rohitss.mvr.toast
@@ -52,7 +52,8 @@ class MainActivity : AacMviActivity<MainViewState, MainViewEffect, MainViewEvent
     override fun renderViewEffect(viewEffect: MainViewEffect) {
         when (viewEffect) {
             is MainViewEffect.ShowSnackbar -> {
-                Snackbar.make(coordinatorLayoutRoot, viewEffect.message, Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(coordinatorLayoutRoot, viewEffect.message, Snackbar.LENGTH_SHORT)
+                    .show()
             }
             is MainViewEffect.ShowToast -> {
                 toast(message = viewEffect.message)
