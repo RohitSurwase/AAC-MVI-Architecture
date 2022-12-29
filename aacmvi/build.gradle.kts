@@ -5,12 +5,10 @@ plugins {
 }
 
 android {
-    compileSdkVersion(33)
+    compileSdk = 33
     defaultConfig {
-        minSdkVersion(14)
-        targetSdkVersion(33)
-        versionCode = 1
-        versionName = "1.0"
+        minSdk = 14
+        targetSdk = 33
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -23,10 +21,10 @@ android {
 }
 
 dependencies {
-    implementation("androidx.appcompat:appcompat:1.3.1")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.5.30")
+    implementation("androidx.appcompat:appcompat:1.5.1")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.0")
     //ViewModel and LiveData
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
-    kapt("androidx.lifecycle:lifecycle-common-java8:2.3.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
+    kapt("androidx.lifecycle:lifecycle-common-java8:2.5.1")
 }

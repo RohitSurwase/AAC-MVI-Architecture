@@ -2,12 +2,14 @@ package com.rohitss.mvr.mockapi
 
 import com.rohitss.mvr.BuildConfig
 import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.ResponseBody.Companion.toResponseBody
 
 class MockInterceptor : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         if (BuildConfig.DEBUG) {
-            val uri = chain.request().url().uri().toString()
+            val uri = chain.request().url.toUri().toString()
             val responseString = when {
                 uri.endsWith("mock") -> getMockApiResponse
                 else -> ""
@@ -19,10 +21,8 @@ class MockInterceptor : Interceptor {
                 .protocol(Protocol.HTTP_2)
                 .message(responseString)
                 .body(
-                    ResponseBody.create(
-                        MediaType.parse("application/json"),
-                        responseString.toByteArray()
-                    )
+                    responseString.toByteArray()
+                        .toResponseBody("application/json".toMediaTypeOrNull())
                 )
                 .addHeader("content-type", "application/json")
                 .build()

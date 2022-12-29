@@ -4,13 +4,14 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import com.google.android.material.snackbar.Snackbar
 import com.rohitss.aacmvi.activity.AacMviActivity
-import com.rohitss.mvr.R
+import com.rohitss.mvr.databinding.ActivityMainBinding
 import com.rohitss.mvr.repository.NewsItem
 import com.rohitss.mvr.toast
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AacMviActivity<MainViewState, MainViewEffect, MainViewEvent, MainActVM>() {
     override val viewModel: MainActVM by viewModels()
+
+    private lateinit var binding: ActivityMainBinding
 
     private val newsRvAdapter by lazy {
         NewsRvAdapter {
@@ -20,30 +21,33 @@ class MainActivity : AacMviActivity<MainViewState, MainViewEffect, MainViewEvent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        rvNewsHome.adapter = newsRvAdapter
+        with(binding) {
+            rvNewsHome.adapter = newsRvAdapter
 
-        srlNewsHome.setOnRefreshListener {
-            viewModel.process(MainViewEvent.OnSwipeRefresh)
-        }
+            srlNewsHome.setOnRefreshListener {
+                viewModel.process(MainViewEvent.OnSwipeRefresh)
+            }
 
-        fabStar.setOnClickListener {
-            viewModel.process(MainViewEvent.FabClicked)
+            fabStar.setOnClickListener {
+                viewModel.process(MainViewEvent.FabClicked)
+            }
         }
     }
 
     override fun renderViewState(viewState: MainViewState) {
         when (viewState.fetchStatus) {
             is FetchStatus.Fetched -> {
-                srlNewsHome.isRefreshing = false
+                binding.srlNewsHome.isRefreshing = false
             }
             is FetchStatus.NotFetched -> {
                 viewModel.process(MainViewEvent.FetchNews)
-                srlNewsHome.isRefreshing = false
+                binding.srlNewsHome.isRefreshing = false
             }
             is FetchStatus.Fetching -> {
-                srlNewsHome.isRefreshing = true
+                binding.srlNewsHome.isRefreshing = true
             }
         }
         newsRvAdapter.submitList(viewState.newsList)
@@ -52,8 +56,11 @@ class MainActivity : AacMviActivity<MainViewState, MainViewEffect, MainViewEvent
     override fun renderViewEffect(viewEffect: MainViewEffect) {
         when (viewEffect) {
             is MainViewEffect.ShowSnackbar -> {
-                Snackbar.make(coordinatorLayoutRoot, viewEffect.message, Snackbar.LENGTH_SHORT)
-                    .show()
+                Snackbar.make(
+                    binding.coordinatorLayoutRoot,
+                    viewEffect.message,
+                    Snackbar.LENGTH_SHORT
+                ).show()
             }
             is MainViewEffect.ShowToast -> {
                 toast(message = viewEffect.message)

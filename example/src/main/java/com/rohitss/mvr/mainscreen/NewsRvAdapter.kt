@@ -1,22 +1,25 @@
 package com.rohitss.mvr.mainscreen
 
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.api.load
+import coil.load
 import com.rohitss.mvr.R
-import com.rohitss.mvr.inflate
+import com.rohitss.mvr.databinding.ItemViewBinding
 import com.rohitss.mvr.repository.NewsItem
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_view.view.*
 
 class NewsRvAdapter(private val listener: (View) -> Unit) :
     ListAdapter<NewsItem, NewsRvAdapter.MyViewHolder>(NewsItemItemCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        return MyViewHolder(inflate(parent.context, R.layout.item_view, parent), listener)
+        return MyViewHolder(
+            ItemViewBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
+            ), listener
+        )
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -25,17 +28,19 @@ class NewsRvAdapter(private val listener: (View) -> Unit) :
 
     override fun getItemCount() = currentList.size
 
-    inner class MyViewHolder(override val containerView: View, listener: (View) -> Unit) :
-        RecyclerView.ViewHolder(containerView),
-        LayoutContainer {
+    inner class MyViewHolder(
+        private val itemViewBinding: ItemViewBinding,
+        listener: (View) -> Unit
+    ) :
+        RecyclerView.ViewHolder(itemViewBinding.root) {
 
         init {
-            itemView.setOnClickListener(listener)
+            itemViewBinding.root.setOnClickListener(listener)
         }
 
         fun bind(newsItem: NewsItem) =
-            with(itemView) {
-                itemView.tag = newsItem
+            with(itemViewBinding) {
+                root.tag = newsItem
                 tvTitle.text = newsItem.title
                 tvDescription.text = newsItem.description
                 ivThumbnail.load(newsItem.imageUrl) {
